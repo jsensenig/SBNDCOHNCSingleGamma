@@ -15,11 +15,6 @@ target_link_libraries(sbnanalysis_SBNOscReco_NumuReco
   ubana_BasicTool_GeoAlgo
   sbncode_CosmicIdAlgs
   sbnanalysis_SBNOscReco_opHitFinderSBND
-  icaruscode_CRT	
-  icaruscode_CRTUtils
-  icaruscode_CRTData
-  icaruscode_CRTProducts
-  icaruscode_CRT_CRTProducts_dict
 )
 
 # Install all libraries to the main "lib" directory

@@ -1,5 +1,5 @@
 # Define the subproject name
-project(SBNOscReco)
+project(SBNDCOHNCSingleGamma)
 
 # Directories where includes are found (in addition to those defined in the
 # parent CMakeLists.txt, one directory up).

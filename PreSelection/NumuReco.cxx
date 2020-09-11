@@ -49,11 +49,9 @@
 
 #include "larsim/MCCheater/ParticleInventory.h"
 #include "larsim/MCCheater/PhotonBackTracker.h"
-#include "icaruscode/CRT/CRTProducts/CRTHit.hh"
 #ifdef CRTTrack_hh_
 #undef CRTTrack_hh_
 #endif
-#include "icaruscode/CRT/CRTProducts/CRTTrack.hh"
 #include "sbndcode/CRT/CRTUtils/TPCGeoUtil.h"
 #include "sbndcode/Geometry/GeometryWrappers/CRTGeoAlg.h"
 
@@ -135,31 +133,31 @@ int NumuReco::GetPhotonMotherID(int mcparticle_id) {
   }
 }
 
-sbnd::crt::CRTHit ICARUS2SBNDCrtHit(const icarus::crt::CRTHit& inp) {
-  sbnd::crt::CRTHit ret;
-  ret.feb_id = inp.feb_id;
-  ret.pesmap = inp.pesmap;
-  // convert ADC -> PE's
-  // TODO: fix -- hardcoded for now as temporary hack
-  unsigned n_strip = 2;
-  double baseline = 63.6; // ADC
-  double gain = 70; // ADC / PE
-  ret.peshit = (inp.peshit - n_strip*baseline) / (gain * n_strip);
-  ret.ts0_s = inp.ts0_s;
-  ret.ts0_s_corr = inp.ts0_s_corr;
-  ret.ts0_ns = inp.ts0_ns;
-  ret.ts0_ns_corr = inp.ts0_ns_corr;
-  ret.ts1_ns = inp.ts1_ns;
-  ret.plane = inp.plane;
-  ret.x_pos = inp.x_pos;
-  ret.x_err = inp.x_err;
-  ret.y_pos = inp.y_pos;
-  ret.y_err = inp.y_err;
-  ret.z_pos = inp.z_pos;
-  ret.z_err = inp.z_err;
-  ret.tagger = inp.tagger;
-  return ret;
-}
+//sbnd::crt::CRTHit ICARUS2SBNDCrtHit(const icarus::crt::CRTHit& inp) {
+//  sbnd::crt::CRTHit ret;
+//  ret.feb_id = inp.feb_id;
+//  ret.pesmap = inp.pesmap;
+//  // convert ADC -> PE's
+//  // TODO: fix -- hardcoded for now as temporary hack
+//  unsigned n_strip = 2;
+//  double baseline = 63.6; // ADC
+//  double gain = 70; // ADC / PE
+//  ret.peshit = (inp.peshit - n_strip*baseline) / (gain * n_strip);
+//  ret.ts0_s = inp.ts0_s;
+//  ret.ts0_s_corr = inp.ts0_s_corr;
+//  ret.ts0_ns = inp.ts0_ns;
+//  ret.ts0_ns_corr = inp.ts0_ns_corr;
+//  ret.ts1_ns = inp.ts1_ns;
+//  ret.plane = inp.plane;
+//  ret.x_pos = inp.x_pos;
+//  ret.x_err = inp.x_err;
+//  ret.y_pos = inp.y_pos;
+//  ret.y_err = inp.y_err;
+//  ret.z_pos = inp.z_pos;
+//  ret.z_err = inp.z_err;
+//  ret.tagger = inp.tagger;
+//  return ret;
+//}
 
 NumuReco::NumuReco() :
   SelectionBase(),
@@ -1128,46 +1126,46 @@ void NumuReco::CollectTPCInformation(const gallery::Event &ev) {
 }
 
 
-void NumuReco::CollectCRTInformation(const gallery::Event &ev) {
-  _crt_tracks_local.clear();
-  _crt_hits_local.clear();
-
-  // collect the CRT Tracks
-  gallery::Handle<std::vector<sbnd::crt::CRTTrack>> crt_tracks_sbnd;
-  bool has_crt_tracks_sbnd = ev.getByLabel(_config.CRTTrackTag, crt_tracks_sbnd);
-  gallery::Handle<std::vector<icarus::crt::CRTTrack>> crt_tracks_icarus;
-  // bool has_crt_tracks_icarus = ev.getByLabel(_config.CRTTrackTag, crt_tracks_icarus);
-  bool has_crt_tracks_icarus = false;
-  _has_crt_tracks = has_crt_tracks_sbnd || has_crt_tracks_icarus;
-
-  if (has_crt_tracks_icarus) {
-    for (unsigned i = 0; i < crt_tracks_icarus->size(); i++) {
-      _crt_tracks_local.emplace_back();
-      memcpy(&_crt_tracks_local[i], &crt_tracks_icarus->at(i), sizeof(sbnd::crt::CRTTrack));
-    }  
-  }
-  _crt_tracks = (_has_crt_tracks) ?
-    ( (has_crt_tracks_sbnd) ? crt_tracks_sbnd.product() : &_crt_tracks_local) : 
-    NULL;
-
-  // collect the CRT Hits
-  gallery::Handle<std::vector<sbnd::crt::CRTHit>> crt_hits_sbnd;
-  bool has_crt_hits_sbnd = ev.getByLabel(_config.CRTHitTag, crt_hits_sbnd);
-  gallery::Handle<std::vector<icarus::crt::CRTHit>> crt_hits_icarus;
-  bool has_crt_hits_icarus = ev.getByLabel(_config.CRTHitTag, crt_hits_icarus);
-  _has_crt_hits = has_crt_hits_sbnd || has_crt_hits_icarus;
-
-  // Convert ICARUS Hits to SBND Hits
-  if (has_crt_hits_icarus) {
-    for (unsigned i = 0; i < crt_hits_icarus->size(); i++) {
-      _crt_hits_local.push_back(ICARUS2SBNDCrtHit(crt_hits_icarus->at(i)));
-    }  
-  }
-
-  _crt_hits = (_has_crt_hits) ?
-    ( (has_crt_hits_sbnd) ? crt_hits_sbnd.product() : &_crt_hits_local) :
-    NULL;
-}
+//void NumuReco::CollectCRTInformation(const gallery::Event &ev) {
+//  _crt_tracks_local.clear();
+//  _crt_hits_local.clear();
+//
+//  // collect the CRT Tracks
+//  gallery::Handle<std::vector<sbnd::crt::CRTTrack>> crt_tracks_sbnd;
+//  bool has_crt_tracks_sbnd = ev.getByLabel(_config.CRTTrackTag, crt_tracks_sbnd);
+//  gallery::Handle<std::vector<icarus::crt::CRTTrack>> crt_tracks_icarus;
+//  // bool has_crt_tracks_icarus = ev.getByLabel(_config.CRTTrackTag, crt_tracks_icarus);
+//  bool has_crt_tracks_icarus = false;
+//  _has_crt_tracks = has_crt_tracks_sbnd || has_crt_tracks_icarus;
+//
+//  if (has_crt_tracks_icarus) {
+//    for (unsigned i = 0; i < crt_tracks_icarus->size(); i++) {
+//      _crt_tracks_local.emplace_back();
+//      memcpy(&_crt_tracks_local[i], &crt_tracks_icarus->at(i), sizeof(sbnd::crt::CRTTrack));
+//    }  
+//  }
+//  _crt_tracks = (_has_crt_tracks) ?
+//    ( (has_crt_tracks_sbnd) ? crt_tracks_sbnd.product() : &_crt_tracks_local) : 
+//    NULL;
+//
+//  // collect the CRT Hits
+//  gallery::Handle<std::vector<sbnd::crt::CRTHit>> crt_hits_sbnd;
+//  bool has_crt_hits_sbnd = ev.getByLabel(_config.CRTHitTag, crt_hits_sbnd);
+//  gallery::Handle<std::vector<icarus::crt::CRTHit>> crt_hits_icarus;
+//  bool has_crt_hits_icarus = ev.getByLabel(_config.CRTHitTag, crt_hits_icarus);
+//  _has_crt_hits = has_crt_hits_sbnd || has_crt_hits_icarus;
+//
+//  // Convert ICARUS Hits to SBND Hits
+//  if (has_crt_hits_icarus) {
+//    for (unsigned i = 0; i < crt_hits_icarus->size(); i++) {
+//      _crt_hits_local.push_back(ICARUS2SBNDCrtHit(crt_hits_icarus->at(i)));
+//    }  
+//  }
+//
+//  _crt_hits = (_has_crt_hits) ?
+//    ( (has_crt_hits_sbnd) ? crt_hits_sbnd.product() : &_crt_hits_local) :
+//    NULL;
+//}
 
 numu::CRTMatch NumuReco::CRTMatching(
    const numu::RecoTrack &track,
