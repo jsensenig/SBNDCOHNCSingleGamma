@@ -63,6 +63,7 @@ specify the <input files> as a filelist using some file the ends in
 To run in ICARUS, use the fcl: NumuRecoICARUS.fcl.
 
 Post Process:
+
 	sbn-postprocess -m SBNOscReco_Selection -c fcl/SBNDSelection.fcl <input files>
 
 Where <input files> are a set of normal ROOT files that have been
@@ -78,17 +79,16 @@ runs the setup_sbnanalysis.sh script, and make sure that the
 SBN_ANALYSIS_DIR path set in that script is changed correctly. In terms
 of commands:
 
-cp -r path/to/sbncode/sbnalysis/build path/to/localproducts/sbncode/sbnanalysis
-tar -zcvf path/to/tars/sbncode.tar.gz path/to/localproducts/*
-
+	cp -r path/to/sbncode/sbnalysis/build path/to/localproducts/sbncode/sbnanalysis
+	tar -zcvf path/to/tars/sbncode.tar.gz path/to/localproducts/*
 
 Make sure you change the first line of setup_sbnanalysis.sh from (e.g.):
 
-export SBN_ANALYSIS_DIR=/sbnd/app/users/gputnam/sbndcode/srcs/sbncode/sbnanalysis/build # Absolute path
+	export SBN_ANALYSIS_DIR=/sbnd/app/users/gputnam/sbndcode/srcs/sbncode/sbnanalysis/build # Absolute path
 
 to:
 
-export SBN_ANALYSIS_DIR=./sbncode/sbnanalysis # Relative path as on grid
+	export SBN_ANALYSIS_DIR=./sbncode/sbnanalysis # Relative path as on grid
 
 And in the grid script, source this file. Note that all configuration
 files and filelists needed by the analysis are copied into the
