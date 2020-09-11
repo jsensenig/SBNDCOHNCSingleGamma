@@ -1,10 +1,12 @@
+### SBND COH NC Single Gamma Analysis
+
 This directory implements a reconstruction-based event selection for
 inclusive identidication on numu CC interactions in SBND/ICARUS for use
 by a study of numu disappearance in SBN.
 
 The directory structure is as follows:
 
-PreSelection: Gathers infomation for a bunch of modules on reconstructed
+`PreSelection`: Gathers infomation for a bunch of modules on reconstructed
               objects. Organizes interactions/slices from Pandora, runs
               calorimetry and momentum calculatiosn on all TPC tracks,
               runs cosmic ID on all tracks. Runs as a sbn module -- 
@@ -12,42 +14,42 @@ PreSelection: Gathers infomation for a bunch of modules on reconstructed
               output file. In each event, makes a single numu::RecoEvent
               object, as documented in the Data/ directory.
 
-PostProcess: Runs selections and produces histograms/plots for the
+`PostProcess`: Runs selections and produces histograms/plots for the
              analysis. Tuns as a sbn-postprocess module. Takes as input
              normal ROOT files (coming from the PreSelection) and
              produces a normal ROOT file with plots (no TTree).
 
-Histograms: Classes encapsulating ROOT histograms generated in both the
+`Histograms`: Classes encapsulating ROOT histograms generated in both the
             pre-selectionstage and in the post-processing stage.
 
-CosmicIDAlgs: Algorithms for identification of cosmic muons. Originally
+`CosmicIDAlgs`: Algorithms for identification of cosmic muons. Originally
               implemented by Tom Brooks for SBND. Ported by me into
               sbncode.
 
-Data: Contains all the data produced by the PreSelection module. The
+`Data`: Contains all the data produced by the PreSelection module. The
       entrypoint is the RecoEvent class. All units of the data are
       GeV/cm/us. Any deviation from this is a bug.
 
-DataProductViewers: Small modules for printing information associated
+`DataProductViewers`: Small modules for printing information associated
                     with LArSoft data products. Each is run as an
                     individual sbn module.
 
-LArReco: Modules copied from larreco for use by the PreSelection.
+`LArReco`: Modules copied from larreco for use by the PreSelection.
 
-OpHitFinder: A copy of the SBND optical hit finder for use by the
+`OpHitFinder`: A copy of the SBND optical hit finder for use by the
              Preselection.
 
-RecoUtils: A copy of the sbndcode RecoUtils directory ported to sbncode
+`RecoUtils`: A copy of the sbndcode RecoUtils directory ported to sbncode
            for use by the preselection.
 
-fcl: Configuration files
+`fcl`: Configuration files
 
-grid: Scripts for running on the grid
+`grid`: Scripts for running on the grid
 
-plots: Python scripts for making plots out of the histograms produced by
+`plots`: Python scripts for making plots out of the histograms produced by
        the PostProcess module.
 
-RUNNING THE CODE:
+### RUNNING THE CODE:
 
 PreSelection:
 
